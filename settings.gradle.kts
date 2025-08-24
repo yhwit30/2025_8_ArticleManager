@@ -1,0 +1,1 @@
+rootProject.name = "2025_8_ArticleManager"
