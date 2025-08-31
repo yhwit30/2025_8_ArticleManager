@@ -7,6 +7,10 @@ public class Article {
     private String regDate;
     private String updateDate;
 
+    // 과제
+//    private Member member;
+//    private String memberName;
+
     public Article(int id, String title, String body, String regDate, String updateDate) {
         this.id = id;
         this.title = title;
