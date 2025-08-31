@@ -1,16 +1,44 @@
-package org.example;
+package org.example.controller;
+
+import org.example.dto.Article;
+import org.example.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ArticleController{
+public class ArticleController extends Controller {
     private Scanner sc;
     private int lastId = 3;
     private List<Article> articleList = new ArrayList<>();
+    private String cmd;
 
     public ArticleController(Scanner sc) {
         this.sc = sc;
+    }
+
+    @Override
+    public void doAction(String cmd, String actionMethodName) {
+        this.cmd = cmd;
+
+        switch (actionMethodName) {
+            case "write":
+                doWrite();
+                break;
+            case "list":
+                showList();
+                break;
+            case "detail":
+                showDetail();
+                break;
+            case "delete":
+                doDelete();
+                break;
+            case "modify":
+                doModify();
+                break;
+        }
+
     }
 
     public void doWrite() {
@@ -28,7 +56,7 @@ public class ArticleController{
         lastId++;
     }
 
-    public void showList(String cmd) {
+    public void showList() {
         System.out.println("==게시글 목록==");
         System.out.println("번호   /   제목   /   내용   /   등록일자");
         if (articleList.size() == 0) {
@@ -58,7 +86,7 @@ public class ArticleController{
         }
     }
 
-    public void showDetail(String cmd) {
+    public void showDetail() {
         System.out.println("==게시글 상세보기==");
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
@@ -74,7 +102,7 @@ public class ArticleController{
         System.out.println("내용 : " + foundArticle.getBody());
     }
 
-    public void doDelete(String cmd) {
+    public void doDelete() {
         System.out.println("==게시글 삭제==");
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
@@ -87,7 +115,7 @@ public class ArticleController{
         System.out.println(id + "번 게시글이 삭제되었습니다.");
     }
 
-    public void doModify(String cmd) {
+    public void doModify() {
         System.out.println("==게시글 수정==");
         int id = Integer.parseInt(cmd.split(" ")[2]);
 
@@ -119,6 +147,7 @@ public class ArticleController{
         return null;
 
     }
+
     public void makeArticleTestData() {
         System.out.println("게시글 테스트 데이터 생성됨");
         articleList.add(new Article(1, "제목1", "내용1", "2025-8-20 12:12:12", "2025-9-1 12:30:30"));

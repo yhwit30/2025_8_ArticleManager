@@ -1,18 +1,38 @@
-package org.example;
+package org.example.controller;
+
+import org.example.dto.Member;
+import org.example.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MemberController{
+public class MemberController extends Controller {
 
     private List<Member> memberList = new ArrayList<>();
     private int lastMemberId = 3;
     private Scanner sc;
+    private String cmd;
 
     public MemberController(Scanner sc) {
         this.sc = sc;
     }
+
+    @Override
+    public void doAction(String cmd, String actionMethodName) {
+        this.cmd = cmd;
+
+        switch (actionMethodName) {
+            case "join":
+                doJoin();
+                break;
+            case "list":
+                showList();
+                break;
+        }
+
+    }
+
 
     public void showList() {
         for (Member member : memberList) {
@@ -63,6 +83,7 @@ public class MemberController{
 
         lastMemberId++;
     }
+
     private boolean isJoinableLoginId(String loginId) {
         for (Member member : memberList) {
             if (member.getLoginId().equals(loginId)) {

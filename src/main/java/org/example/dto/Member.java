@@ -1,6 +1,6 @@
-package org.example;
+package org.example.dto;
 
-class Member {
+public class Member {
     private int id;
     private String loginId;
     private String loginPw;
