@@ -13,6 +13,7 @@ public class MemberController extends Controller {
     private int lastMemberId = 3;
     private Scanner sc;
     private String cmd;
+    private Member loginedMember;
 
     public MemberController(Scanner sc) {
         this.sc = sc;
@@ -29,8 +30,63 @@ public class MemberController extends Controller {
             case "list":
                 showList();
                 break;
+            case "login":
+                doLogin();
+                break;
+            case "logout":
+                doLogout();
+                break;
         }
 
+    }
+
+    private boolean isLogined() {
+        return loginedMember == null;
+    }
+
+    private void doLogout() {
+        if(isLogined()){
+            System.out.println("로그아웃인 상태입니다.");
+            return;
+        }
+        loginedMember = null;
+        System.out.println("로그아웃되었습니다.");
+    }
+
+    private void doLogin() {
+        if(!isLogined()){
+            System.out.println("이미 로그인 상태입니다.");
+            return;
+        }
+
+        System.out.println("==로그인==");
+        System.out.print("아이디 : ");
+        String loginId = sc.nextLine().trim();
+        System.out.print("비밀번호 : ");
+        String loginPw = sc.nextLine().trim();
+
+        Member member = getMemberByLoginId(loginId);
+        if(member == null){
+            System.out.println("일치하는 회원이 없습니다.");
+            return;
+        }
+        if(!member.getLoginPw().equals(loginPw)){
+            System.out.println("비밀번호가 틀렸습니다.");
+            return;
+        }
+        // 로그인 성공 - 로그인 상태 저장
+        loginedMember = member;
+
+        System.out.println(loginedMember.getName() +"님 로그인 성공");
+    }
+
+    private Member getMemberByLoginId(String loginId) {
+        for (Member member : memberList){
+            if(member.getLoginId().equals(loginId)){
+                return member;
+            }
+        }
+        return null;
     }
 
 

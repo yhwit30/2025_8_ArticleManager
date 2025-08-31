@@ -93,6 +93,7 @@ public class ArticleController extends Controller {
         Article foundArticle = getArticleById(id);
         if (foundArticle == null) {
             System.out.println(id + "번 게시글은 없습니다.");
+            return;
         }
 
         System.out.println("번호 : " + foundArticle.getId());
@@ -109,6 +110,7 @@ public class ArticleController extends Controller {
         Article foundArticle = getArticleById(id);
         if (foundArticle == null) {
             System.out.println(id + "번 게시글은 없습니다.");
+            return;
         }
 
         articleList.remove(foundArticle);
@@ -122,6 +124,7 @@ public class ArticleController extends Controller {
         Article foundArticle = getArticleById(id);
         if (foundArticle == null) {
             System.out.println(id + "번 게시글은 없습니다.");
+            return;
         }
 
         System.out.println("기존 제목 : " + foundArticle.getTitle());
@@ -143,9 +146,7 @@ public class ArticleController extends Controller {
                 return article;
             }
         }
-        System.out.println("해당 게시글은 없습니다.");
         return null;
-
     }
 
     public void makeArticleTestData() {
