@@ -1,25 +1,23 @@
 package org.example;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
+    static List<Article> articleList = new ArrayList<>();
+
     public static void main(String[] args) {
 
-//        LocalDateTime now = LocalDateTime.now();
-//        String date = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-//        System.out.println(date);
-
+        makeTestData();
 
         Scanner sc = new Scanner(System.in);
 
         System.out.println("== 프로그램 시작 ==");
 
-        int lastId = 0;
-        List<Article> articleList = new ArrayList<>();
+        int lastId = 3;
+
 
         while(true){
 
@@ -129,9 +127,15 @@ public class Main {
         }
         System.out.println("프로그램 종료");
         sc.close();
-
+    }
+    private static void makeTestData(){
+        System.out.println("테스트 데이터 생성됨");
+        articleList.add(new Article(1, "제목1", "내용1", "2025-8-20 12:12:12", "2025-9-1 12:30:30"));
+        articleList.add(new Article(2, "제목2", "내용2", "2025-8-26 12:23:12", Util.getNowStr()));
+        articleList.add(new Article(3, "제목3", "내용3", "2025-8-27 12:12:44", Util.getNowStr()));
     }
 }
+
 class Article{
     private int id;
     private String title;
