@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) {
 
         makeTestData();
+        makeMemberTestData();
 
         Scanner sc = new Scanner(System.in);
 
@@ -35,15 +36,37 @@ public class Main {
             }
             if (cmd.equals("member list")) {
                 for (Member member : memberList) {
-                    System.out.println("member" + member.toString());
+                    System.out.println(member.toString());
                 }
             } else if (cmd.equals("member join")) {
                 System.out.println("==회원가입==");
                 int id = lastMemberId + 1;
-                System.out.print("아이디 : ");
-                String loginId = sc.nextLine().trim();
-                System.out.print("비밀번호 : ");
-                String loginPw = sc.nextLine().trim();
+
+                String loginId = null;
+                while (true) {
+                    System.out.print("아이디 : ");
+                    loginId = sc.nextLine().trim();
+
+                    if (!isJoinableLoginId(loginId)) {
+                        System.out.println(loginId + "는 사용할 수 없는 아이디입니다.");
+                        continue;
+                    }
+                    break;
+                }
+
+                String loginPw = null;
+                while (true) {
+                    System.out.print("비밀번호 : ");
+                    loginPw = sc.nextLine().trim();
+                    System.out.print("비밀번호 : ");
+                    String loginPwCheck = sc.nextLine().trim();
+
+                    if (!loginPw.equals(loginPwCheck)) {
+                        System.out.println("비밀번호를 확인하세요.");
+                        continue;
+                    }
+                    break;
+                }
                 System.out.print("이름 : ");
                 String name = sc.nextLine().trim();
                 String regDate = Util.getNowStr();
@@ -155,6 +178,15 @@ public class Main {
         sc.close();
     }
 
+    private static boolean isJoinableLoginId(String loginId) {
+        for (Member member : memberList) {
+            if (member.getLoginId().equals(loginId)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private static Article getArticleById(int id) {
         for (Article article : articleList) {
             if (article.getId() == id) {
@@ -167,10 +199,17 @@ public class Main {
     }
 
     private static void makeTestData() {
-        System.out.println("테스트 데이터 생성됨");
+        System.out.println("게시글 테스트 데이터 생성됨");
         articleList.add(new Article(1, "제목1", "내용1", "2025-8-20 12:12:12", "2025-9-1 12:30:30"));
         articleList.add(new Article(2, "제목2", "내용2", "2025-8-26 12:23:12", Util.getNowStr()));
         articleList.add(new Article(3, "제목3", "내용3", "2025-8-27 12:12:44", Util.getNowStr()));
+    }
+
+    private static void makeMemberTestData() {
+        System.out.println("회원 테스트 데이터 생성됨");
+        memberList.add(new Member(1, "test1", "test1", "testName1", "2025-7-5", Util.getNowStr()));
+        memberList.add(new Member(2, "test2", "test2", "testName2", Util.getNowStr(), Util.getNowStr()));
+        memberList.add(new Member(3, "test3", "test3", "testName3", Util.getNowStr(), Util.getNowStr()));
     }
 }
 
